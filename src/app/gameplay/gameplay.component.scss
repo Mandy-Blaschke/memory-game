@@ -19,10 +19,15 @@
     max-width: 80px;
     max-height: 80px;
 
-    img, .hidden-cards {
+    .picture, .hidden-cards {
       border-radius: 6px;
       height: 80px;
       width: 80px;
+    }
+
+    .picture {
+      background-size: cover;
+      background-position: center;
     }
 
     .hidden-cards {

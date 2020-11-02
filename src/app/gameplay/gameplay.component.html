@@ -7,7 +7,8 @@
       <div *ngIf="!card.visible" class="hidden-cards">
         <p>Memory</p>
       </div>
-      <img *ngIf="card.visible" alt="pic" src="{{card.pic}}">
+      <div *ngIf="card.visible" class="picture" [style.background-image]="'url(' + card.pic + ')'"></div>
+
     </div>
 
   </div>

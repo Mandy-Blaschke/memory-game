@@ -110,6 +110,8 @@ export class GameplayService {
     this.fieldCards = [];
     this.visibleCards = [];
     this.foundPairs = [];
+    // TODO: Neues Spiel? einbauen
+    this.router.navigate(['start']);
   }
 
   showCard(card: GameCard): void {

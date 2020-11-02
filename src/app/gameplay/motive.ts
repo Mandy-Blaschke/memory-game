@@ -13,12 +13,12 @@ for (let i = 1; i <= 34; i++) {
 export const people: string[] = [];
 
 for (let i = 1; i <= 33; i++) {
-  people.push( `assets/cats/${i}.jpg`);
+  people.push( `assets/people/${i}.jpg`);
 }
 
 export const objects: string[] = [];
 
 for (let i = 1; i <= 33; i++) {
-  objects.push( `assets/cats/${i}.jpg`);
+  objects.push( `assets/objects/${i}.jpg`);
 }
 
