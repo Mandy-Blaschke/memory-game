@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {cats} from './gameplay/motive';
+import {Injectable} from '@angular/core';
+import {cats, dogs, objects, people} from './gameplay/motive';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -7,11 +7,23 @@ import {Router} from '@angular/router';
 })
 export class GameplayService {
 
-  constructor(private router: Router) { }
+
+  constructor(private router: Router) {
+  }
+
+  motive = 'cats';
+
+  motives = [
+    {value: 'cats', title: 'Katzen'},
+    {value: 'dogs', title: 'Hunde'},
+    {value: 'people', title: 'Menschen'},
+    {value: 'objects', title: 'Objekte'},
+    {value: 'mixed', title: 'Gemischt'}
+  ];
 
   playMode: 'player' | 'pvc' = 'player';
 
-  fieldsize = 2;
+  fieldsize = 20;
 
   fieldCards: GameCard[] = [];
 
@@ -23,13 +35,28 @@ export class GameplayService {
 
   startedGame = false;
 
+  getMotiveArray(): string[] {
+    switch (this.motive) {
+      case 'cats':
+        return cats;
+      case 'dogs':
+        return dogs;
+      case 'people':
+        return people;
+      case 'object':
+        return objects;
+      case 'mixed':
+        return cats.concat(dogs, people, objects);
+    }
+  }
+
   startGame(): void {
     this.router.navigate(['game']);
-    this.createField(cats);
+    this.createField(this.getMotiveArray());
   }
 
   createField(array: string[]): void {
-    if (this.fieldsize <= 33 && this.fieldsize >= 2){
+    if (this.fieldsize <= 33 && this.fieldsize >= 2) {
       this.endGame();
       const arrayCopy = [...array];
       while (this.fieldCards.length < this.fieldsize * 2) {

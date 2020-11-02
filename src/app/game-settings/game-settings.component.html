@@ -2,31 +2,42 @@
 
   <h2>Möchtest Du gegen jemanden spielen?</h2>
 
-  <div class="modus">
+  <div class="checkboxes">
+    <label (click)="service.playMode = 'player'">
+      <input type="radio" name="choice" value="single" checked>
+      Single Player
+    </label>
 
-    <div class="checkboxen">
-      <label (click)="service.playMode = 'player'">
-        <input type="radio" name="choice" value="single" checked>
-        Single Player
-      </label>
+    <label (click)="service.playMode = 'player'">
+      <input type="radio" name="choice" value="pvp">
+      PvP
+    </label>
 
-      <label (click)="service.playMode = 'player'">
-        <input type="radio" name="choice" value="pvp">
-        PvP
-      </label>
+    <label (click)="service.playMode = 'pvc'">
+      <input type="radio" name="choice" value="pvc">
+      PvC
+    </label>
+  </div>
 
-      <label (click)="service.playMode = 'pvc'">
-        <input type="radio" name="choice" value="pvc">
-        PvC
-      </label>
-    </div>
+  <h2>Wie viele Kartenpaare soll es geben?</h2>
 
-    <h2>Wie viele Kartenpaare soll es geben?</h2>
+  <div class="checkboxes">
+    <label class="field-size">
+      <input type="number" min="2" max="33" [(ngModel)]="service.fieldsize">
+      Möglich sind 2 bis 33.
+    </label>
+  </div>
 
-    <div class="checkboxen">
-      <label class="field-size">
-        <input type="number" min="2" max="33" [(ngModel)]="service.fieldsize">
-        Schreibe bitte eine Zahl zwischen 2 und 33.
+
+  <h2>Welche Motive möchtest Du haben?</h2>
+
+
+  <div class="checkboxes">
+
+    <div *ngFor="let array of service.motives">
+      <label>
+        <input type="radio" name="motives" value="{{array.value}}" [(ngModel)]="service.motive">
+        {{array.title}}
       </label>
     </div>
 
@@ -37,7 +48,7 @@
 
     <h2>Wie schwer soll es werden?</h2>
 
-    <div class="checkboxen">
+    <div class="checkboxes">
       <label>
         <input type="radio" name="difficulty" value="easy">
         leicht
@@ -55,7 +66,7 @@
     </div>
   </div>
 
+
+  <button (click)="service.startGame()">Starten</button>
+
 </div>
-
-
-<button (click)="service.startGame()">Starten</button>
