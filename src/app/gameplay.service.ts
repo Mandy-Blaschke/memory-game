@@ -23,7 +23,7 @@ export class GameplayService {
 
   playMode: 'player' | 'pvc' = 'player';
 
-  fieldsize = 20;
+  fieldSize = 20;
 
   fieldCards: GameCard[] = [];
 
@@ -56,10 +56,10 @@ export class GameplayService {
   }
 
   createField(array: string[]): void {
-    if (this.fieldsize <= 33 && this.fieldsize >= 2) {
+    if (this.fieldSize <= 33 && this.fieldSize >= 2) {
       this.endGame();
       const arrayCopy = [...array];
-      while (this.fieldCards.length < this.fieldsize * 2) {
+      while (this.fieldCards.length < this.fieldSize * 2) {
         const cardOne: GameCard = this.getCardFromArray(arrayCopy);
         const cardTwo = {...cardOne, id: this.createRandomId()};
 
@@ -77,7 +77,7 @@ export class GameplayService {
   }
 
   shuffleCards(): void {
-    for (let i = 0; i < this.fieldsize * 2; i++) {
+    for (let i = 0; i < this.fieldSize * 2; i++) {
       this.fieldCards.sort(() => Math.random() > 0.5 ? -1 : 1);
     }
   }
