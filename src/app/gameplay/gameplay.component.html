@@ -1,0 +1,15 @@
+<button (click)="startGame()">Starten</button>
+
+<div *ngIf="startedGame" class="card-container">
+
+  <div class="card-items" *ngFor="let card of fieldCards">
+
+    <div (click)="showCard(card)" class="card">
+      <div *ngIf="!card.visible" class="hidden-cards">Memory</div>
+      <img *ngIf="card.visible" alt="pic" src="{{card.pic}}">
+    </div>
+
+  </div>
+
+</div>
+

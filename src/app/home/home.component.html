@@ -1,0 +1,43 @@
+<div class="content">
+
+  <h1>
+    Memory
+  </h1>
+
+  <button (click)="toggleRules()" class="hide-rules">Regeln ein-/ausblenden</button>
+
+  <p *ngIf="showRules">
+    Beim Memory geht es darum, immer zwei Karten mit dem selben Motiv zu finden.
+    <br>
+    Das Spiel beginnt in dem ein Spieler zwei Karten aufdeckt. Handelt es sich um ein Paar, darf er
+    zwei weiteren Karten aufdecken.
+    <br>
+    Sind die von dem Spieler aufgedeckten nicht identisch, ist der nächste Spieler am Zug.
+    <br>
+    <br>
+    Das Spiel dauer solange an, bis alle Paare gefunden worden sind.
+    <br>
+    Spielt man das Spiel nicht alleine, so gewinnt der Spieler, der die meisten Paare gefunden hat.
+  </p>
+
+  <label>
+    Single Player
+    <br>
+    <input type="checkbox" checked>
+  </label>
+
+  <label>
+    PvP
+    <br>
+    <input type="checkbox">
+  </label>
+
+  <label>
+    PvC
+    <br>
+    <input type="checkbox">
+  </label>
+
+  <button routerLink="/game">Zum Spiel</button>
+
+</div>

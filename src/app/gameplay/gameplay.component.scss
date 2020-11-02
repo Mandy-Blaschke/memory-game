@@ -1,0 +1,39 @@
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // TODO: Border entfernen
+  border: 5px solid #2196F3;
+  max-width: 1000px;
+  min-height: 250px;
+  margin: 0 auto;
+}
+
+.card-items {
+  box-sizing: border-box;
+
+  .card {
+    max-width: 80px;
+    max-height: 80px;
+
+    img, .hidden-cards {
+      border-radius: 6px;
+      height: 80px;
+      width: 80px;
+    }
+
+    .hidden-cards {
+      border: 1px solid white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #2196F3;
+      color: black;
+    }
+  }
+}
+
+
+
