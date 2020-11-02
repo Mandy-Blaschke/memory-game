@@ -1,0 +1,37 @@
+.content {
+  text-align: center;
+
+  .checkboxen {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 500px){
+      flex-direction: column;
+    }
+
+    label {
+      height: 75px;
+      min-width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 10px;
+      border: 1px solid red;
+
+      input {
+        margin: 0 15px;
+      }
+    }
+
+    .field-size {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 15px;
+
+      input {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

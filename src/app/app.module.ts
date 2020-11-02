@@ -5,16 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameplayComponent } from './gameplay/gameplay.component';
 import { HomeComponent } from './home/home.component';
+import {FormsModule} from '@angular/forms';
+import { GameSettingsComponent } from './game-settings/game-settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameplayComponent,
-    HomeComponent
+    HomeComponent,
+    GameSettingsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,61 @@
+<div class="content">
+
+  <h2>Möchtest Du gegen jemanden spielen?</h2>
+
+  <div class="modus">
+
+    <div class="checkboxen">
+      <label (click)="service.playMode = 'player'">
+        <input type="radio" name="choice" value="single" checked>
+        Single Player
+      </label>
+
+      <label (click)="service.playMode = 'player'">
+        <input type="radio" name="choice" value="pvp">
+        PvP
+      </label>
+
+      <label (click)="service.playMode = 'pvc'">
+        <input type="radio" name="choice" value="pvc">
+        PvC
+      </label>
+    </div>
+
+    <h2>Wie viele Kartenpaare soll es geben?</h2>
+
+    <div class="checkboxen">
+      <label class="field-size">
+        <input type="number" min="2" max="33" [(ngModel)]="service.fieldsize">
+        Schreibe bitte eine Zahl zwischen 2 und 33.
+      </label>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="service.playMode === 'pvc'">
+
+    <h2>Wie schwer soll es werden?</h2>
+
+    <div class="checkboxen">
+      <label>
+        <input type="radio" name="difficulty" value="easy">
+        leicht
+      </label>
+
+      <label>
+        <input type="radio" name="difficulty" value="middle">
+        mittel
+      </label>
+
+      <label>
+        <input type="radio" name="difficulty" value="hard">
+        schwer
+      </label>
+    </div>
+  </div>
+
+</div>
+
+
+<button (click)="service.startGame()">Starten</button>

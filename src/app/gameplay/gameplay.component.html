@@ -1,11 +1,12 @@
-<button (click)="startGame()">Starten</button>
 
-<div *ngIf="startedGame" class="card-container">
+<div *ngIf="service.startedGame" class="card-container">
 
-  <div class="card-items" *ngFor="let card of fieldCards">
+  <div class="card-items" *ngFor="let card of service.fieldCards">
 
-    <div (click)="showCard(card)" class="card">
-      <div *ngIf="!card.visible" class="hidden-cards">Memory</div>
+    <div (click)="service.showCard(card)" class="card">
+      <div *ngIf="!card.visible" class="hidden-cards">
+        <p>Memory</p>
+      </div>
       <img *ngIf="card.visible" alt="pic" src="{{card.pic}}">
     </div>
 

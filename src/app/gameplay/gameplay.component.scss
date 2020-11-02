@@ -9,6 +9,7 @@
   max-width: 1000px;
   min-height: 250px;
   margin: 0 auto;
+  padding: 5px;
 }
 
 .card-items {
@@ -31,6 +32,10 @@
       align-items: center;
       background-color: #2196F3;
       color: black;
+
+      p {
+        transform: rotate(45deg);
+      }
     }
   }
 }
