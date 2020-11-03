@@ -7,7 +7,6 @@ import {Router} from '@angular/router';
 })
 export class GameplayService {
 
-
   constructor(private router: Router) {
   }
 
@@ -21,28 +20,41 @@ export class GameplayService {
     {value: 'mixed', title: 'Gemischt'}
   ];
 
-  playMode: 'single' | 'pvp' | 'pvc' = 'single';
+  playMode: 'single' | 'pvp' | 'pvc' = undefined;
 
   fieldSize = 20;
 
   canInteract = true;
-
   startedGame = false;
-
   finishedGame = false;
 
   fieldCards: GameCard[] = [];
-
   visibleCards: GameCard[] = [];
-
   foundPairs: GameCard[] = [];
 
   foundPairsPlayerOne = 0;
-
   foundPairsPlayerTwo = 0;
 
   firstPlayersTurn = true;
   secondPlayersTurn = false;
+  playerOneWon = false;
+  playerTwoWon = false;
+
+  computersTurn(): void {
+    if (this.playMode === 'pvc') {
+      if (this.secondPlayersTurn) {
+        const viewCard: GameCard = this.fieldCards[Math.floor(Math.random() * this.fieldSize)];
+        viewCard.visible = true;
+        this.visibleCards.push(viewCard);
+
+        const viewCard2: GameCard = this.fieldCards[Math.floor(Math.random() * this.fieldSize)];
+        viewCard2.visible = true;
+        this.visibleCards.push(viewCard2);
+
+        this.checkForPair();
+      }
+    }
+  }
 
   getMotiveArray(): string[] {
     switch (this.motive) {
@@ -60,9 +72,15 @@ export class GameplayService {
   }
 
   startGame(): void {
-    this.router.navigate(['game']);
-    this.createField(this.getMotiveArray());
-    this.startedGame = true;
+    if (this.playMode !== undefined) {
+      this.router.navigate(['game']);
+      this.clearField();
+      this.finishedGame = false;
+      this.createField(this.getMotiveArray());
+      this.startedGame = true;
+    } else {
+      alert('Wähle einen Spielmodus.');
+    }
   }
 
   createField(array: string[]): void {
@@ -116,6 +134,7 @@ export class GameplayService {
       if (this.firstPlayersTurn) {
         this.secondPlayersTurn = true;
         this.firstPlayersTurn = false;
+        this.computersTurn();
       } else {
         this.secondPlayersTurn = false;
         this.firstPlayersTurn = true;
@@ -127,6 +146,12 @@ export class GameplayService {
     this.fieldCards = [];
     this.visibleCards = [];
     this.foundPairs = [];
+    this.foundPairsPlayerOne = 0;
+    this.foundPairsPlayerTwo = 0;
+    this.firstPlayersTurn = true;
+    this.secondPlayersTurn = false;
+    this.playerOneWon = false;
+    this.playerTwoWon = false;
   }
 
   showCard(card: GameCard): void {
@@ -139,6 +164,10 @@ export class GameplayService {
         this.visibleCards.push(card);
       }
     }
+    this.checkForPair();
+  }
+
+  checkForPair(): void {
     if (this.visibleCards.length === 2) {
       if (this.visibleCards[0].pic === this.visibleCards[1].pic) {
         this.foundPair();
@@ -165,17 +194,30 @@ export class GameplayService {
 
   foundPair(): void {
     this.foundPairs.push(this.visibleCards[0]);
-    if (this.firstPlayersTurn) {
-      this.foundPairsPlayerOne++;
-    } else {
-      this.foundPairsPlayerTwo++;
-    }
+    this.countScores();
     this.foundPairs.push(this.visibleCards[1]);
     this.visibleCards = [];
 
     if (this.foundPairs.length === this.fieldCards.length) {
       this.clearField();
+      this.getWinner();
       this.endGame();
+    }
+  }
+
+  countScores(): void {
+    if (this.firstPlayersTurn) {
+      this.foundPairsPlayerOne++;
+    } else {
+      this.foundPairsPlayerTwo++;
+    }
+  }
+
+  getWinner(): void {
+    if (this.foundPairsPlayerTwo > this.foundPairsPlayerOne) {
+      this.playerTwoWon = true;
+    } else {
+      this.playerOneWon = true;
     }
   }
 
