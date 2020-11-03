@@ -16,7 +16,8 @@
   <h3>Computer</h3>
   <p>{{service.foundPairsPlayerTwo}}</p>
 
-  <div *ngIf="!service.finishedGame">
+  <!-- TODO: Fehler finden, warum Anzeige trotz Spielende? -->
+  <div *ngIf="service.finishedGame === true">
     <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
     <h3 *ngIf="service.secondPlayersTurn">Computer ist am Zug</h3>
   </div>
@@ -52,3 +53,4 @@
   <button [routerLink]="'/settings'">Neues Spiel?</button>
   <button [routerLink]="'/home'">Zur Startseite</button>
 </div>
+

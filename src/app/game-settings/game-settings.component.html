@@ -49,21 +49,16 @@
     <h2>Wie schwer soll es werden?</h2>
 
     <div class="checkboxes">
-      <label>
-        <input type="radio" name="difficulty" value="easy">
-        leicht
-      </label>
 
-      <label>
-        <input type="radio" name="difficulty" value="middle">
-        mittel
-      </label>
+      <div *ngFor="let diff of service.difficulty">
+        <label>
+          <input type="radio" name="difficulty" value="{{diff.value}}" [(ngModel)]="service.diff">
+          {{diff.title}}
+        </label>
+      </div>
 
-      <label>
-        <input type="radio" name="difficulty" value="hard">
-        schwer
-      </label>
     </div>
+
   </div>
 
 

@@ -11,13 +11,19 @@ export class GameplayService {
   }
 
   motive = 'cats';
-
   motives = [
     {value: 'cats', title: 'Katzen'},
     {value: 'dogs', title: 'Hunde'},
     {value: 'people', title: 'Menschen'},
     {value: 'objects', title: 'Objekte'},
     {value: 'mixed', title: 'Gemischt'}
+  ];
+
+  diff: string;
+  difficulty = [
+    {value: 'easy', title: 'Leicht'},
+    {value: 'middle', title: 'Mittel'},
+    {value: 'hard', title: 'Schwer'},
   ];
 
   playMode: 'single' | 'pvp' | 'pvc' = undefined;
@@ -31,6 +37,7 @@ export class GameplayService {
   fieldCards: GameCard[] = [];
   visibleCards: GameCard[] = [];
   foundPairs: GameCard[] = [];
+  onceWasVisibleCard = new Set<GameCard>();
 
   foundPairsPlayerOne = 0;
   foundPairsPlayerTwo = 0;
@@ -40,21 +47,41 @@ export class GameplayService {
   playerOneWon = false;
   playerTwoWon = false;
 
+  getPickableCards(): GameCard[] {
+    return this.fieldCards.filter((card) => !this.foundPairs.includes(card));
+  }
+
+
   computersTurn(): void {
     if (this.playMode === 'pvc') {
       if (this.secondPlayersTurn) {
-        const viewCard: GameCard = this.fieldCards[Math.floor(Math.random() * this.fieldSize)];
-        viewCard.visible = true;
-        this.visibleCards.push(viewCard);
+        this.canInteract = false;
 
-        const viewCard2: GameCard = this.fieldCards[Math.floor(Math.random() * this.fieldSize)];
-        viewCard2.visible = true;
-        this.visibleCards.push(viewCard2);
+        // TODO mehr Schwierigkeitsstufen
 
-        this.checkForPair();
+        const easyCards = this.getPickableCards();
+        const compPickOne: GameCard = easyCards[Math.floor(Math.random() * easyCards.length)];
+
+        let compPickTwo: GameCard = compPickOne;
+        while (compPickTwo === compPickOne) {
+          compPickTwo = easyCards[Math.floor(Math.random() * easyCards.length)];
+        }
+
+        setTimeout(() => {
+          compPickOne.visible = true;
+          this.visibleCards.push(compPickOne);
+          this.onceWasVisibleCard.add(compPickOne);
+
+          compPickTwo.visible = true;
+          this.visibleCards.push(compPickTwo);
+          this.onceWasVisibleCard.add(compPickTwo);
+
+          this.checkForPair();
+        }, 1500);
       }
     }
   }
+
 
   getMotiveArray(): string[] {
     switch (this.motive) {
@@ -89,7 +116,7 @@ export class GameplayService {
       const arrayCopy = [...array];
       while (this.fieldCards.length < this.fieldSize * 2) {
         const cardOne: GameCard = this.getCardFromArray(arrayCopy);
-        const cardTwo = {...cardOne, id: this.createRandomId()};
+        const cardTwo = {...cardOne};
 
         if (!this.fieldCards.find((card) => card.pic === cardOne.pic)) {
           this.fieldCards.push(cardOne);
@@ -116,17 +143,12 @@ export class GameplayService {
     const card: GameCard = {
       pic,
       visible: false,
-      id: this.createRandomId(),
     };
     return card;
   }
 
   createRandomIndex(array: string[]): number {
     return Math.floor(Math.random() * array.length);
-  }
-
-  createRandomId(): number {
-    return Math.floor(Math.random() * 10000);
   }
 
   nextPlayersTurn(): void {
@@ -146,6 +168,7 @@ export class GameplayService {
     this.fieldCards = [];
     this.visibleCards = [];
     this.foundPairs = [];
+    this.onceWasVisibleCard.clear();
     this.foundPairsPlayerOne = 0;
     this.foundPairsPlayerTwo = 0;
     this.firstPlayersTurn = true;
@@ -162,6 +185,7 @@ export class GameplayService {
       if (!card.visible) {
         card.visible = true;
         this.visibleCards.push(card);
+        this.onceWasVisibleCard.add(card);
       }
     }
     this.checkForPair();
@@ -171,6 +195,7 @@ export class GameplayService {
     if (this.visibleCards.length === 2) {
       if (this.visibleCards[0].pic === this.visibleCards[1].pic) {
         this.foundPair();
+        this.computersTurn();
       } else {
         this.noPairFound();
       }
@@ -193,14 +218,11 @@ export class GameplayService {
   }
 
   foundPair(): void {
-    this.foundPairs.push(this.visibleCards[0]);
+    this.foundPairs.push(this.visibleCards[0], this.visibleCards[1]);
     this.countScores();
-    this.foundPairs.push(this.visibleCards[1]);
     this.visibleCards = [];
 
     if (this.foundPairs.length === this.fieldCards.length) {
-      this.clearField();
-      this.getWinner();
       this.endGame();
     }
   }
@@ -222,6 +244,8 @@ export class GameplayService {
   }
 
   endGame(): void {
+    this.clearField();
+    this.getWinner();
     this.finishedGame = true;
   }
 
@@ -230,5 +254,4 @@ export class GameplayService {
 export interface GameCard {
   pic: string;
   visible: boolean;
-  id: number;
 }
