@@ -1,0 +1,16 @@
+<div *ngIf="service.playMode === 'pvc'">
+
+  <h2>Wie schwer soll es werden?</h2>
+
+  <div class="checkboxes">
+
+    <div *ngFor="let diff of service.difficulty">
+      <label>
+        <input type="radio" name="difficulty" value="{{diff.value}}" [(ngModel)]="service.diff">
+        {{diff.title}}
+      </label>
+    </div>
+
+  </div>
+
+</div>

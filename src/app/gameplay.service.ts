@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class GameplayService {
+  errorFieldsize = false;
+  errorPlayMode = false;
 
   constructor(private router: Router) {
   }
@@ -47,156 +49,29 @@ export class GameplayService {
   playerOneWon = false;
   playerTwoWon = false;
 
-  getPickableCards(): GameCard[] {
-    return this.fieldCards.filter((card) => !this.foundPairs.includes(card));
-  }
-
-
-  computersTurn(): void {
-    if (this.playMode === 'pvc') {
-      if (this.secondPlayersTurn) {
-        this.canInteract = false;
-
-        // TODO mehr Schwierigkeitsstufen
-
-        const easyCards = this.getPickableCards();
-        const compPickOne: GameCard = easyCards[Math.floor(Math.random() * easyCards.length)];
-
-        let compPickTwo: GameCard = compPickOne;
-
-        if (this.diff === 'middle') {
-          const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
-            return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
-          });
-          if (onceVisibleCanBeTaken.length > 0) {
-            compPickTwo = onceVisibleCanBeTaken[Math.floor(Math.random() * onceVisibleCanBeTaken.length)];
-          }
-        } else if (this.diff === 'hard') {
-          const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
-            return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
-          });
-          if (onceVisibleCanBeTaken.length > 0) {
-            compPickTwo = onceVisibleCanBeTaken.find((card) => card.pic === compPickOne.pic);
-            if (compPickTwo === undefined) {
-              compPickTwo = compPickOne;
-            }
-          }
-        }
-
-
-        while (compPickTwo === compPickOne) {
-          compPickTwo = easyCards[Math.floor(Math.random() * easyCards.length)];
-        }
-
-        setTimeout(() => {
-          compPickOne.visible = true;
-          this.visibleCards.push(compPickOne);
-          this.onceWasVisibleCard.add(compPickOne);
-
-          setTimeout(() => {
-            compPickTwo.visible = true;
-            this.visibleCards.push(compPickTwo);
-            this.onceWasVisibleCard.add(compPickTwo);
-            this.checkForPair();
-          }, 750);
-        }, 750);
-      }
-    }
-  }
-
-
-  getMotiveArray(): string[] {
-    switch (this.motive) {
-      case 'cats':
-        return cats;
-      case 'dogs':
-        return dogs;
-      case 'people':
-        return people;
-      case 'object':
-        return objects;
-      case 'mixed':
-        return cats.concat(dogs, people, objects);
-    }
-  }
-
   startGame(): void {
-    if (this.playMode !== undefined) {
+    if (this.playMode !== undefined && this.fieldSize <= 33 && this.fieldSize >= 2) {
       this.router.navigate(['game']);
+      this.foundPairsPlayerOne = 0;
+      this.foundPairsPlayerTwo = 0;
       this.clearField();
       this.finishedGame = false;
       this.createField(this.getMotiveArray());
       this.startedGame = true;
     } else {
-      alert('Wähle einen Spielmodus.');
-    }
-  }
-
-  createField(array: string[]): void {
-    if (this.fieldSize <= 33 && this.fieldSize >= 2) {
-      this.clearField();
-      const arrayCopy = [...array];
-      while (this.fieldCards.length < this.fieldSize * 2) {
-        const cardOne: GameCard = this.getCardFromArray(arrayCopy);
-        const cardTwo = {...cardOne};
-
-        if (!this.fieldCards.find((card) => card.pic === cardOne.pic)) {
-          this.fieldCards.push(cardOne);
-          this.fieldCards.push(cardTwo);
-        }
+      if (this.playMode === undefined) {
+        this.errorPlayMode = true;
       }
-      this.shuffleCards();
-      this.startedGame = true;
-    } else {
-      alert('Feldgröße stimmt nicht!');
-    }
-  }
-
-  shuffleCards(): void {
-    for (let i = 0; i < this.fieldSize * 2; i++) {
-      this.fieldCards.sort(() => Math.random() > 0.5 ? -1 : 1);
-    }
-  }
-
-  getCardFromArray(array: string[]): GameCard {
-    const index = this.createRandomIndex(array);
-    const pic = array[index];
-    array.splice(array.indexOf(pic), 1);
-    const card: GameCard = {
-      pic,
-      visible: false,
-    };
-    return card;
-  }
-
-  createRandomIndex(array: string[]): number {
-    return Math.floor(Math.random() * array.length);
-  }
-
-  nextPlayersTurn(): void {
-    setTimeout(() => {
-      if (this.firstPlayersTurn) {
-        this.secondPlayersTurn = true;
-        this.firstPlayersTurn = false;
-        this.computersTurn();
-      } else {
-        this.secondPlayersTurn = false;
-        this.firstPlayersTurn = true;
+      if (this.fieldSize > 33 || this.fieldSize < 2) {
+        this.errorFieldsize = true;
       }
-    }, 1500);
+    }
   }
 
-  clearField(): void {
-    this.fieldCards = [];
-    this.visibleCards = [];
-    this.foundPairs = [];
-    this.onceWasVisibleCard.clear();
-    this.foundPairsPlayerOne = 0;
-    this.foundPairsPlayerTwo = 0;
-    this.firstPlayersTurn = true;
-    this.secondPlayersTurn = false;
-    this.playerOneWon = false;
-    this.playerTwoWon = false;
+  endGame(): void {
+    this.clearField();
+    this.getWinner();
+    this.finishedGame = true;
   }
 
   showCard(card: GameCard): void {
@@ -213,7 +88,139 @@ export class GameplayService {
     this.checkForPair();
   }
 
-  checkForPair(): void {
+  private getPickableCards(): GameCard[] {
+    return this.fieldCards.filter((card) => !this.foundPairs.includes(card));
+  }
+
+  private computersTurn(): void {
+    if (this.playMode === 'pvc') {
+      if (this.secondPlayersTurn) {
+        this.canInteract = false;
+
+        const pickableCards = this.getPickableCards();
+        const compPickOne: GameCard = pickableCards[Math.floor(Math.random() * pickableCards.length)];
+
+        let compPickTwo: GameCard = compPickOne;
+
+        compPickTwo = this.smartCompMoveByDiff(compPickTwo, compPickOne);
+
+        while (compPickTwo === compPickOne) {
+          compPickTwo = pickableCards[Math.floor(Math.random() * pickableCards.length)];
+        }
+
+        this.compMakesMove(compPickOne, compPickTwo);
+      }
+    }
+  }
+
+  private compMakesMove(compPickOne: GameCard, compPickTwo: GameCard): void {
+    setTimeout(() => {
+      compPickOne.visible = true;
+      this.visibleCards.push(compPickOne);
+      this.onceWasVisibleCard.add(compPickOne);
+
+      setTimeout(() => {
+        compPickTwo.visible = true;
+        this.visibleCards.push(compPickTwo);
+        this.onceWasVisibleCard.add(compPickTwo);
+        this.checkForPair();
+      }, 750);
+    }, 750);
+  }
+
+  private smartCompMoveByDiff(compPickTwo: GameCard, compPickOne: GameCard): GameCard {
+    if (this.diff === 'middle' || this.diff === 'hard') {
+      const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
+        return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
+      });
+      if (onceVisibleCanBeTaken.length > 0) {
+        if (this.diff === 'middle') {
+          compPickTwo = onceVisibleCanBeTaken[Math.floor(Math.random() * onceVisibleCanBeTaken.length)];
+        } else if (this.diff === 'hard') {
+          compPickTwo = onceVisibleCanBeTaken.find((card) => card.pic === compPickOne.pic) || compPickOne;
+        }
+      }
+    }
+    return compPickTwo;
+  }
+
+  private getMotiveArray(): string[] {
+    switch (this.motive) {
+      case 'cats':
+        return cats;
+      case 'dogs':
+        return dogs;
+      case 'people':
+        return people;
+      case 'object':
+        return objects;
+      case 'mixed':
+        return cats.concat(dogs, people, objects);
+    }
+  }
+
+  private createField(array: string[]): void {
+    this.clearField();
+    const arrayCopy = [...array];
+    while (this.fieldCards.length < this.fieldSize * 2) {
+      const cardOne: GameCard = this.getCardFromArray(arrayCopy);
+      const cardTwo = {...cardOne};
+
+      if (!this.fieldCards.find((card) => card.pic === cardOne.pic)) {
+        this.fieldCards.push(cardOne);
+        this.fieldCards.push(cardTwo);
+      }
+    }
+    this.shuffleCards();
+    this.startedGame = true;
+  }
+
+  private shuffleCards(): void {
+    for (let i = 0; i < this.fieldSize * 2; i++) {
+      this.fieldCards.sort(() => Math.random() > 0.5 ? -1 : 1);
+    }
+  }
+
+  private getCardFromArray(array: string[]): GameCard {
+    const index = this.createRandomIndex(array);
+    const pic = array[index];
+    array.splice(array.indexOf(pic), 1);
+    const card: GameCard = {
+      pic,
+      visible: false,
+    };
+    return card;
+  }
+
+  private createRandomIndex(array: string[]): number {
+    return Math.floor(Math.random() * array.length);
+  }
+
+  private nextPlayersTurn(): void {
+    setTimeout(() => {
+      if (this.firstPlayersTurn) {
+        this.secondPlayersTurn = true;
+        this.firstPlayersTurn = false;
+        this.computersTurn();
+      } else {
+        this.secondPlayersTurn = false;
+        this.firstPlayersTurn = true;
+      }
+    }, 1500);
+  }
+
+  private clearField(): void {
+    this.fieldCards = [];
+    this.visibleCards = [];
+    this.foundPairs = [];
+    this.onceWasVisibleCard.clear();
+    this.firstPlayersTurn = true;
+    this.secondPlayersTurn = false;
+    this.playerOneWon = false;
+    this.playerTwoWon = false;
+  }
+
+  private checkForPair(): void {
     if (this.visibleCards.length === 2) {
       if (this.visibleCards[0].pic === this.visibleCards[1].pic) {
         this.foundPair();
@@ -224,11 +231,11 @@ export class GameplayService {
     }
   }
 
-  canViewCard(): boolean {
+  private canViewCard(): boolean {
     return this.visibleCards.length < 2;
   }
 
-  noPairFound(): void {
+  private noPairFound(): void {
     this.canInteract = false;
     setTimeout(() => {
       this.visibleCards[0].visible = false;
@@ -239,7 +246,7 @@ export class GameplayService {
     this.nextPlayersTurn();
   }
 
-  foundPair(): void {
+  private foundPair(): void {
     this.foundPairs.push(this.visibleCards[0], this.visibleCards[1]);
     this.countScores();
     this.visibleCards = [];
@@ -249,7 +256,7 @@ export class GameplayService {
     }
   }
 
-  countScores(): void {
+  private countScores(): void {
     if (this.firstPlayersTurn) {
       this.foundPairsPlayerOne++;
     } else {
@@ -257,18 +264,12 @@ export class GameplayService {
     }
   }
 
-  getWinner(): void {
+  private getWinner(): void {
     if (this.foundPairsPlayerTwo > this.foundPairsPlayerOne) {
       this.playerTwoWon = true;
     } else {
       this.playerOneWon = true;
     }
-  }
-
-  endGame(): void {
-    this.clearField();
-    this.getWinner();
-    this.finishedGame = true;
   }
 
 }

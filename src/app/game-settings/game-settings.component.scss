@@ -1,10 +1,38 @@
+@use "src/main";
+
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: main.$deep-blue;
+  max-width: 850px;
+  margin: auto;
 
-  .field-size {
-    display: flex;
-    flex-direction: column;
+  * {
+    padding: 10px;
+  }
+
+  .error-play-mode,
+  .error-fieldsize {
+    background-color: #fff9eb;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #a8057f;
+    animation: glowing 1300ms linear;
   }
 }
+
+@keyframes glowing {
+  0% {
+    border: #a8057f;
+    box-shadow: 0 0 5px #a8057f;
+  }
+  50% {
+    border: #e70cae;
+    box-shadow: 0 0 12px #e70cae;
+  }
+  100% {
+    border: #a8057f;
+    box-shadow: 0 0 5px #a8057f;
+  }
+}
+

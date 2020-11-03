@@ -1,8 +1,25 @@
+@use 'src/main';
+
 .content {
+  margin: auto;
   max-width: 850px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
-  text-align: center;
+
+  h1, h2 {
+    margin: 15px 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 10vw;
+    color: main.$middle-blue;
+    text-shadow: 0 2px 1px main.$dark-blue;
+  }
+
+  h2 {
+    font-size: 4vw;
+    color: main.$deep-blue;
+  }
 }

@@ -1,0 +1,26 @@
+<h2>Möchtest Du gegen jemanden spielen?</h2>
+
+<div class="checkboxes">
+
+  <div class="box">
+    <label (click)="service.playMode = 'single'">
+      <input type="radio" name="choice" value="single">
+      Single Player
+    </label>
+  </div>
+
+  <div class="box">
+    <label (click)="service.playMode = 'pvp'">
+      <input type="radio" name="choice" value="pvp">
+      PvP
+    </label>
+  </div>
+
+  <div class="box">
+    <label (click)="service.playMode = 'pvc'">
+      <input type="radio" name="choice" value="pvc">
+      PvC
+    </label>
+  </div>
+
+</div>

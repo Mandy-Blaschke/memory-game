@@ -1,0 +1,13 @@
+<h2>Welche Motive möchtest Du haben?</h2>
+
+
+<div class="checkboxes">
+
+  <div *ngFor="let array of service.motives">
+    <label>
+      <input type="radio" name="motives" value="{{array.value}}" [(ngModel)]="service.motive">
+      {{array.title}}
+    </label>
+  </div>
+
+</div>

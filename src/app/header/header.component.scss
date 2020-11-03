@@ -1,0 +1,9 @@
+@use "src/main";
+
+h1 {
+  margin: 15px 0;
+  font-size: 5vw;
+  text-align: center;
+  color: main.$middle-blue;
+  text-shadow: 0 2px 1px main.$dark-blue;
+}

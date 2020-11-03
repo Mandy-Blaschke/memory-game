@@ -1,67 +1,15 @@
+<app-header></app-header>
+
 <div class="content">
 
-  <h2>Möchtest Du gegen jemanden spielen?</h2>
+  <app-play-mode [class.error-play-mode]="service.errorPlayMode"></app-play-mode>
 
-  <div class="checkboxes">
-    <label (click)="service.playMode = 'single'">
-      <input type="radio" name="choice" value="single">
-      Single Player
-    </label>
+  <app-play-difficulty></app-play-difficulty>
 
-    <label (click)="service.playMode = 'pvp'">
-      <input type="radio" name="choice" value="pvp">
-      PvP
-    </label>
+  <app-play-cards [class.error-fieldsize]="service.errorFieldsize"></app-play-cards>
 
-    <label (click)="service.playMode = 'pvc'">
-      <input type="radio" name="choice" value="pvc">
-      PvC
-    </label>
-  </div>
+  <app-play-motives></app-play-motives>
 
-  <h2>Wie viele Kartenpaare soll es geben?</h2>
-
-  <div class="checkboxes">
-    <label class="field-size">
-      <input type="number" min="2" max="33" [(ngModel)]="service.fieldSize">
-      Möglich sind 2 bis 33.
-    </label>
-  </div>
-
-
-  <h2>Welche Motive möchtest Du haben?</h2>
-
-
-  <div class="checkboxes">
-
-    <div *ngFor="let array of service.motives">
-      <label>
-        <input type="radio" name="motives" value="{{array.value}}" [(ngModel)]="service.motive">
-        {{array.title}}
-      </label>
-    </div>
-
-  </div>
-
-
-  <div *ngIf="service.playMode === 'pvc'">
-
-    <h2>Wie schwer soll es werden?</h2>
-
-    <div class="checkboxes">
-
-      <div *ngFor="let diff of service.difficulty">
-        <label>
-          <input type="radio" name="difficulty" value="{{diff.value}}" [(ngModel)]="service.diff">
-          {{diff.title}}
-        </label>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <button (click)="service.startGame()">Starten</button>
+  <app-button (click)="service.startGame()">Starten</app-button>
 
 </div>

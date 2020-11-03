@@ -1,10 +1,12 @@
+<app-header></app-header>
+
 <header *ngIf="service.playMode === 'pvp'">
   <h3>Spieler 1</h3>
   <p>{{service.foundPairsPlayerOne}}</p>
   <h3>Spieler 2</h3>
   <p>{{service.foundPairsPlayerTwo}}</p>
 
-  <div>
+  <div *ngIf="!service.finishedGame">
     <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
     <h3 *ngIf="service.secondPlayersTurn">Spieler 2 ist am Zug</h3>
   </div>
@@ -16,8 +18,8 @@
   <h3>Computer</h3>
   <p>{{service.foundPairsPlayerTwo}}</p>
 
-  <!-- TODO: Fehler finden, warum Anzeige trotz Spielende? -->
-  <div *ngIf="service.finishedGame === true">
+
+  <div *ngIf="!service.finishedGame">
     <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
     <h3 *ngIf="service.secondPlayersTurn">Computer ist am Zug</h3>
   </div>
