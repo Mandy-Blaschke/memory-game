@@ -1,29 +1,8 @@
 <app-header></app-header>
 
-<header *ngIf="service.playMode === 'pvp'">
-  <h3>Spieler 1</h3>
-  <p>{{service.foundPairsPlayerOne}}</p>
-  <h3>Spieler 2</h3>
-  <p>{{service.foundPairsPlayerTwo}}</p>
+<app-pvp-header  *ngIf="service.playMode === 'pvp'"></app-pvp-header>
 
-  <div *ngIf="!service.finishedGame">
-    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
-    <h3 *ngIf="service.secondPlayersTurn">Spieler 2 ist am Zug</h3>
-  </div>
-</header>
-
-<header *ngIf="service.playMode === 'pvc'">
-  <h3>Spieler</h3>
-  <p>{{service.foundPairsPlayerOne}}</p>
-  <h3>Computer</h3>
-  <p>{{service.foundPairsPlayerTwo}}</p>
-
-
-  <div *ngIf="!service.finishedGame">
-    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
-    <h3 *ngIf="service.secondPlayersTurn">Computer ist am Zug</h3>
-  </div>
-</header>
+<app-pvc-header *ngIf="service.playMode === 'pvc'"></app-pvc-header>
 
 
 <div *ngIf="service.startedGame && !service.finishedGame" class="card-container">
@@ -52,7 +31,7 @@
     <h2 *ngIf="service.playerTwoWon">Computer hat gewonnen!</h2>
   </div>
 
-  <button [routerLink]="'/settings'">Neues Spiel?</button>
-  <button [routerLink]="'/home'">Zur Startseite</button>
+  <app-button [routerLink]="'/settings'">Neues Spiel?</app-button>
+  <app-button [routerLink]="'/home'">Zur Startseite</app-button>
 </div>
 

@@ -13,6 +13,8 @@ import { PlayModeComponent } from './play-mode/play-mode.component';
 import { PlayCardsComponent } from './play-cards/play-cards.component';
 import { PlayMotivesComponent } from './play-motives/play-motives.component';
 import { PlayDifficultyComponent } from './play-difficulty/play-difficulty.component';
+import { PvpHeaderComponent } from './pvp-header/pvp-header.component';
+import { PvcHeaderComponent } from './pvc-header/pvc-header.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PlayDifficultyComponent } from './play-difficulty/play-difficulty.compo
     PlayModeComponent,
     PlayCardsComponent,
     PlayMotivesComponent,
-    PlayDifficultyComponent
+    PlayDifficultyComponent,
+    PvpHeaderComponent,
+    PvcHeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,12 @@
+<header>
+  <h3>Spieler</h3>
+  <p>{{service.foundPairsPlayerOne}}</p>
+  <h3>Computer</h3>
+  <p>{{service.foundPairsPlayerTwo}}</p>
+
+
+  <div *ngIf="!service.finishedGame">
+    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
+    <h3 *ngIf="service.secondPlayersTurn">Computer ist am Zug</h3>
+  </div>
+</header>
