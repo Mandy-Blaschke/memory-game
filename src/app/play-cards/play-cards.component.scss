@@ -1,0 +1,25 @@
+@use "src/main";
+
+h2 {
+  text-align: center;
+}
+
+.checkboxes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      width: 50px;
+      text-align: center;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: bolder;
+      color: main.$middle-blue;
+    }
+  }
+}

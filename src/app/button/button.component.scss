@@ -6,8 +6,9 @@ button {
   font-family: 'Noto Sans SC', sans-serif;
   background-color: main.$light-blue;
   color: main.$action;
+  text-shadow: 1px 1px 0 main.$dark-blue;
   font-weight: bolder;
-  font-size: 1.2rem;
+  font-size: 1.5vw;
   border-radius: 4px;
   box-shadow: 0 1px 2px main.$deep-blue;
   border: none;

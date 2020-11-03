@@ -4,7 +4,7 @@
 
   <div class="checkboxes">
 
-    <div *ngFor="let diff of service.difficulty">
+    <div *ngFor="let diff of service.difficulty" class="box">
       <label>
         <input type="radio" name="difficulty" value="{{diff.value}}" [(ngModel)]="service.diff">
         {{diff.title}}

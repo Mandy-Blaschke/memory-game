@@ -1,0 +1,29 @@
+@use "src/main";
+
+h2 {
+  text-align: center;
+}
+
+.checkboxes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  div {
+
+    &:hover {
+      cursor: pointer;
+      font-weight: bolder;
+    }
+
+    label {
+      display: flex;
+      //flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+
+  }
+
+}
