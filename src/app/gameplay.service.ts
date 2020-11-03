@@ -63,6 +63,27 @@ export class GameplayService {
         const compPickOne: GameCard = easyCards[Math.floor(Math.random() * easyCards.length)];
 
         let compPickTwo: GameCard = compPickOne;
+
+        if (this.diff === 'middle') {
+          const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
+            return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
+          });
+          if (onceVisibleCanBeTaken.length > 0) {
+            compPickTwo = onceVisibleCanBeTaken[Math.floor(Math.random() * onceVisibleCanBeTaken.length)];
+          }
+        } else if (this.diff === 'hard') {
+          const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
+            return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
+          });
+          if (onceVisibleCanBeTaken.length > 0) {
+            compPickTwo = onceVisibleCanBeTaken.find((card) => card.pic === compPickOne.pic);
+            if (compPickTwo === undefined) {
+              compPickTwo = compPickOne;
+            }
+          }
+        }
+
+
         while (compPickTwo === compPickOne) {
           compPickTwo = easyCards[Math.floor(Math.random() * easyCards.length)];
         }
@@ -72,12 +93,13 @@ export class GameplayService {
           this.visibleCards.push(compPickOne);
           this.onceWasVisibleCard.add(compPickOne);
 
-          compPickTwo.visible = true;
-          this.visibleCards.push(compPickTwo);
-          this.onceWasVisibleCard.add(compPickTwo);
-
-          this.checkForPair();
-        }, 1500);
+          setTimeout(() => {
+            compPickTwo.visible = true;
+            this.visibleCards.push(compPickTwo);
+            this.onceWasVisibleCard.add(compPickTwo);
+            this.checkForPair();
+          }, 750);
+        }, 750);
       }
     }
   }
