@@ -1,5 +1,28 @@
+<header *ngIf="service.playMode === 'pvp'">
+  <h3>Spieler 1</h3>
+  <p>{{service.foundPairsPlayerOne}}</p>
+  <h3>Spieler 2</h3>
+  <p>{{service.foundPairsPlayerTwo}}</p>
 
-<div *ngIf="service.startedGame" class="card-container">
+  <div>
+    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
+    <h3 *ngIf="service.secondPlayersTurn">Spieler 2 ist am Zug</h3>
+  </div>
+</header>
+
+<header *ngIf="service.playMode === 'pvc'">
+  <h3>Spieler</h3>
+  <p>{{service.foundPairsPlayerOne}}</p>
+  <h3>Computer</h3>
+  <p>{{service.foundPairsPlayerTwo}}</p>
+
+  <div>
+    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
+    <h3 *ngIf="service.secondPlayersTurn">Computer ist am Zug</h3>
+  </div>
+</header>
+
+<div *ngIf="service.startedGame && !service.finishedGame" class="card-container">
 
   <div class="card-items" *ngFor="let card of service.fieldCards">
 
@@ -15,3 +38,7 @@
 
 </div>
 
+<div *ngIf="service.finishedGame">
+  <button [routerLink]="'/settings'">Neues Spiel?</button>
+  <button [routerLink]="'/home'">Zur Startseite</button>
+</div>

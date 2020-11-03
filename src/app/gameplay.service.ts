@@ -21,9 +21,15 @@ export class GameplayService {
     {value: 'mixed', title: 'Gemischt'}
   ];
 
-  playMode: 'player' | 'pvc' = 'player';
+  playMode: 'single' | 'pvp' | 'pvc' = 'single';
 
   fieldSize = 20;
+
+  canInteract = true;
+
+  startedGame = false;
+
+  finishedGame = false;
 
   fieldCards: GameCard[] = [];
 
@@ -31,9 +37,12 @@ export class GameplayService {
 
   foundPairs: GameCard[] = [];
 
-  canInteract = true;
+  foundPairsPlayerOne = 0;
 
-  startedGame = false;
+  foundPairsPlayerTwo = 0;
+
+  firstPlayersTurn = true;
+  secondPlayersTurn = false;
 
   getMotiveArray(): string[] {
     switch (this.motive) {
@@ -53,11 +62,12 @@ export class GameplayService {
   startGame(): void {
     this.router.navigate(['game']);
     this.createField(this.getMotiveArray());
+    this.startedGame = true;
   }
 
   createField(array: string[]): void {
     if (this.fieldSize <= 33 && this.fieldSize >= 2) {
-      this.endGame();
+      this.clearField();
       const arrayCopy = [...array];
       while (this.fieldCards.length < this.fieldSize * 2) {
         const cardOne: GameCard = this.getCardFromArray(arrayCopy);
@@ -67,12 +77,11 @@ export class GameplayService {
           this.fieldCards.push(cardOne);
           this.fieldCards.push(cardTwo);
         }
-
       }
       this.shuffleCards();
       this.startedGame = true;
     } else {
-      alert('Feldgröße');
+      alert('Feldgröße stimmt nicht!');
     }
   }
 
@@ -103,15 +112,21 @@ export class GameplayService {
   }
 
   nextPlayersTurn(): void {
-    console.log('Next players turn');
+    setTimeout(() => {
+      if (this.firstPlayersTurn) {
+        this.secondPlayersTurn = true;
+        this.firstPlayersTurn = false;
+      } else {
+        this.secondPlayersTurn = false;
+        this.firstPlayersTurn = true;
+      }
+    }, 1500);
   }
 
-  endGame(): void {
+  clearField(): void {
     this.fieldCards = [];
     this.visibleCards = [];
     this.foundPairs = [];
-    // TODO: Neues Spiel? einbauen
-    this.router.navigate(['start']);
   }
 
   showCard(card: GameCard): void {
@@ -150,12 +165,22 @@ export class GameplayService {
 
   foundPair(): void {
     this.foundPairs.push(this.visibleCards[0]);
+    if (this.firstPlayersTurn) {
+      this.foundPairsPlayerOne++;
+    } else {
+      this.foundPairsPlayerTwo++;
+    }
     this.foundPairs.push(this.visibleCards[1]);
     this.visibleCards = [];
 
     if (this.foundPairs.length === this.fieldCards.length) {
+      this.clearField();
       this.endGame();
     }
+  }
+
+  endGame(): void {
+    this.finishedGame = true;
   }
 
 }

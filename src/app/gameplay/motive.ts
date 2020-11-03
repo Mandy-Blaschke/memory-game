@@ -6,7 +6,7 @@ for (let i = 1; i <= 33; i++) {
 
 export const dogs: string[] = [];
 
-for (let i = 1; i <= 34; i++) {
+for (let i = 1; i <= 33; i++) {
   dogs.push( `assets/dogs/${i}.jpg`);
 }
 
