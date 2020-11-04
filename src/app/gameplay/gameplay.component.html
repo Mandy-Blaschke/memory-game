@@ -8,11 +8,11 @@
 <div *ngIf="service.startedGame && !service.finishedGame" class="card-container">
 
   <div class="card-items" *ngFor="let card of service.fieldCards">
-    <div (click)="service.showCard(card)" class="card">
-      <div *ngIf="!card.visible" class="hidden-cards">
+    <div (click)="service.showCard(card)" [class.visible]="card.visible" class="card">
+      <div class="hidden-cards">
         <p>Memory</p>
       </div>
-      <div *ngIf="card.visible" class="picture" [style.background-image]="'url(' + card.pic + ')'"></div>
+      <div class="picture" [style.background-image]="'url(' + card.pic + ')'"></div>
 
     </div>
   </div>

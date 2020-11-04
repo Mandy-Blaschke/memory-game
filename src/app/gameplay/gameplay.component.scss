@@ -14,31 +14,44 @@
 
 .card-items {
   box-sizing: border-box;
+  perspective: 1000px;
+
+  @media (max-width: 1000px) {
+    width: 60px;
+    height: 60px;
+  }
 
   .card {
-    max-width: 80px;
-    max-height: 80px;
+    position: relative;
+    top: 0;
+    left: 0;
     margin: 2px;
+    transform-origin: center;
+    width: 80px;
+    height: 80px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 
-    @media (max-width: 1000px) {
-      width: 60px;
-      height: 60px;
+    &.visible {
+    transform: rotateY(180deg);
     }
 
-    .picture, .hidden-cards {
-      border-radius: 6px;
-      height: 80px;
-      width: 80px;
 
-      @media (max-width: 1000px) {
-        width: 60px;
-        height: 60px;
-      }
+    .picture, .hidden-cards {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 6px;
+      height: 100%;
+      width: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .picture {
       background-size: cover;
       background-position: center;
+      transform: rotateY(180deg);
     }
 
     .hidden-cards {
