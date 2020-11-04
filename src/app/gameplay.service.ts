@@ -129,14 +129,41 @@ export class GameplayService {
   }
 
   private smartCompMoveByDiff(compPickTwo: GameCard, compPickOne: GameCard): GameCard {
-    if (this.diff === 'middle' || this.diff === 'hard') {
+    let doMiddleMove = false;
+    let doHardMove = false;
+
+    const rollDice = Math.random();
+
+    if (this.diff === 'easy') {
+      if (rollDice > 0.5) {
+        doMiddleMove = true;
+      }
+    }
+
+    if (this.diff === 'middle' && rollDice > 0.2) {
+      if (rollDice <= 0.7) {
+        doMiddleMove = true;
+      } else {
+        doHardMove = true;
+      }
+    }
+
+    if (this.diff === 'hard' && rollDice > 0.1) {
+      if (rollDice <= 0.6) {
+        doMiddleMove = true;
+      } else {
+        doHardMove = true;
+      }
+    }
+
+    if (doMiddleMove || doHardMove) {
       const onceVisibleCanBeTaken = Array.from(this.onceWasVisibleCard).filter((card) => {
         return !this.visibleCards.includes(card) && !this.foundPairs.includes(card);
       });
       if (onceVisibleCanBeTaken.length > 0) {
-        if (this.diff === 'middle') {
+        if (doMiddleMove) {
           compPickTwo = onceVisibleCanBeTaken[Math.floor(Math.random() * onceVisibleCanBeTaken.length)];
-        } else if (this.diff === 'hard') {
+        } else if (doHardMove) {
           compPickTwo = onceVisibleCanBeTaken.find((card) => card.pic === compPickOne.pic) || compPickOne;
         }
       }
