@@ -16,23 +16,23 @@
   .error-fieldsize {
     background-color: #fff9eb;
     border-radius: 8px;
-    box-shadow: 0 0 5px #a8057f;
+    box-shadow: 0 0 5px #a88505;
     animation: glowing 1300ms linear;
   }
 }
 
 @keyframes glowing {
   0% {
-    border: #a8057f;
-    box-shadow: 0 0 5px #a8057f;
+    border: #a88d05;
+    box-shadow: 0 0 5px #a88505;
   }
   50% {
-    border: #e70cae;
-    box-shadow: 0 0 12px #e70cae;
+    border: #e7b00c;
+    box-shadow: 0 0 15px #e7b80c;
   }
   100% {
-    border: #a8057f;
-    box-shadow: 0 0 5px #a8057f;
+    border: #a88505;
+    box-shadow: 0 0 5px #a88505;
   }
 }
 

@@ -15,10 +15,14 @@ button {
 
   &:hover {
     cursor: pointer;
+    background-color: main.$yellow;
+    color: main.$light-blue;
+    text-shadow: none;
   }
 
   &:active {
     background-color: main.$yellow;
     color: main.$light-blue;
+    box-shadow: -1px -1px 2px main.$deep-blue;
   }
 }
