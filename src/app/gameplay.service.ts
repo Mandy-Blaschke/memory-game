@@ -179,7 +179,7 @@ export class GameplayService {
         return dogs;
       case 'people':
         return people;
-      case 'object':
+      case 'objects':
         return objects;
       case 'mixed':
         return cats.concat(dogs, people, objects);
