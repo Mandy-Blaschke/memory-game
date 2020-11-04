@@ -16,11 +16,6 @@
   box-sizing: border-box;
   perspective: 1000px;
 
-  @media (max-width: 1000px) {
-    width: 60px;
-    height: 60px;
-  }
-
   .card {
     position: relative;
     top: 0;
@@ -31,6 +26,11 @@
     height: 80px;
     transition: transform 0.6s;
     transform-style: preserve-3d;
+
+    @media (max-width: 1000px) {
+      width: 60px;
+      height: 60px;
+    }
 
     &.visible {
     transform: rotateY(180deg);
@@ -46,6 +46,7 @@
       width: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+      box-shadow: 1px 1px 2px main.$deep-blue;
     }
 
     .picture {
@@ -55,15 +56,19 @@
     }
 
     .hidden-cards {
-      border: 1px solid white;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #2196F3;
+      background-color: main.$light-blue;
       color: black;
 
       p {
         transform: rotate(45deg);
+        color: ghostwhite;
+
+        @media (max-width: 1000px) {
+          font-size: 0.8rem;
+        }
       }
     }
   }
