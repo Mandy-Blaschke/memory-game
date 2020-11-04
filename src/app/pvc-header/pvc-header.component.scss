@@ -1,51 +1,5 @@
 @use "src/main";
 
 .content {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-
-  .turn {
-    display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-
-    h2 {
-      color: main.$orange;
-      animation: glowing 2s infinite;
-
-      @media (max-width: 530px) {
-        font-size: 1rem;
-      }
-    }
-
-    @keyframes glowing {
-      0% {
-        text-shadow: 0 0 0 main.$yellow;
-      }
-      25% {
-        text-shadow: 0 0 2px main.$yellow;
-      }
-      50% {
-        text-shadow: 0 0 6px main.$yellow;
-      }
-      75% {
-        text-shadow: 0 0 2px main.$yellow;
-      }
-      100% {
-        text-shadow: 0 0 0 main.$yellow;
-      }
-    }
-  }
-
-  .player-one, .player-two {
-
-    h3 {
-      color: main.$dark-blue;
-
-      @media (max-width: 530px) {
-        font-size: 1rem;
-      }
-    }
-  }
+  @include main.content;
 }

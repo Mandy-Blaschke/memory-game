@@ -1,0 +1,36 @@
+@use "src/main";
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: main.$dark-blue;
+
+  .winner {
+    margin-bottom: 25px;
+    h2 {
+      color: main.$light-blue;
+      animation: winner-glowing 2s infinite;
+    }
+  }
+
+  @keyframes winner-glowing {
+    0% {
+      text-shadow: 0 0 0 main.$yellow;
+    }
+    25% {
+      text-shadow: 1px 4px 4px main.$yellow;
+    }
+    50% {
+      text-shadow: 1px 4px 8px main.$yellow;
+      transform: scale(1.3);
+    }
+    75% {
+      text-shadow: 1px 4px 4px main.$yellow;
+    }
+    100% {
+      text-shadow: 0 0 0 main.$yellow;
+    }
+  }
+}

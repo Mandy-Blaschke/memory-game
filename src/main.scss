@@ -5,3 +5,58 @@ $middle-blue: #0069e0;
 $light-blue: #1f93ff;
 $yellow: #FFCA0A;
 $orange: #f2542d;
+
+@mixin content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  .turn {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+
+    h2 {
+      color: $orange;
+      animation: glowing 2s infinite;
+
+      @media (max-width: 530px) {
+        font-size: 1rem;
+      }
+    }
+
+    @keyframes glowing {
+      0% {
+        text-shadow: 0 0 0 $yellow;
+      }
+      25% {
+        text-shadow: 0 0 2px $yellow;
+      }
+      50% {
+        text-shadow: 0 0 6px $yellow;
+      }
+      75% {
+        text-shadow: 0 0 2px $yellow;
+      }
+      100% {
+        text-shadow: 0 0 0 $yellow;
+      }
+    }
+  }
+
+  .player-one, .player-two {
+
+    h3 {
+      color: $dark-blue;
+      text-align: center;
+
+      @media (max-width: 530px) {
+        font-size: 1rem;
+      }
+    }
+
+    .scores {
+      font-weight: bold;
+    }
+  }
+}

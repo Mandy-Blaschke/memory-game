@@ -1,12 +1,12 @@
-<div *ngIf="service.finishedGame">
+<div *ngIf="service.finishedGame" class="content">
 
-  <h2 *ngIf="service.playerOneWon">Spieler 1 hat gewonnen!</h2>
+  <h2 *ngIf="service.playerOneWon" class="winner">Spieler 1 hat gewonnen!</h2>
 
-  <div *ngIf="service.playMode === 'pvp'">
+  <div *ngIf="service.playMode === 'pvp'" class="winner">
     <h2 *ngIf="service.playerTwoWon">Spieler 2 hat gewonnen!</h2>
   </div>
 
-  <div *ngIf="service.playMode === 'pvc'">
+  <div *ngIf="service.playMode === 'pvc'" class="winner">
     <h2 *ngIf="service.playerTwoWon">Computer hat gewonnen!</h2>
   </div>
 
