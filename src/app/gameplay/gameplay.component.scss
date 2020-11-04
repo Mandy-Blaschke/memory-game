@@ -1,15 +1,15 @@
+@use "src/main";
 
 .card-container {
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  // TODO: Border entfernen
-  border: 5px solid #2196F3;
-  max-width: 1000px;
-  min-height: 250px;
-  margin: 0 auto;
-  padding: 5px;
+  border: 5px solid main.$light-blue;
+  background-color: #fff8f8;
+  border-radius: 4px;
 }
 
 .card-items {
@@ -18,11 +18,22 @@
   .card {
     max-width: 80px;
     max-height: 80px;
+    margin: 2px;
+
+    @media (max-width: 1000px) {
+      width: 60px;
+      height: 60px;
+    }
 
     .picture, .hidden-cards {
       border-radius: 6px;
       height: 80px;
       width: 80px;
+
+      @media (max-width: 1000px) {
+        width: 60px;
+        height: 60px;
+      }
     }
 
     .picture {

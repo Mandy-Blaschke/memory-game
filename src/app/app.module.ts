@@ -15,6 +15,7 @@ import { PlayMotivesComponent } from './play-motives/play-motives.component';
 import { PlayDifficultyComponent } from './play-difficulty/play-difficulty.component';
 import { PvpHeaderComponent } from './pvp-header/pvp-header.component';
 import { PvcHeaderComponent } from './pvc-header/pvc-header.component';
+import { FinishedGameComponent } from './finished-game/finished-game.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PvcHeaderComponent } from './pvc-header/pvc-header.component';
     PlayMotivesComponent,
     PlayDifficultyComponent,
     PvpHeaderComponent,
-    PvcHeaderComponent
+    PvcHeaderComponent,
+    FinishedGameComponent
   ],
   imports: [
     BrowserModule,

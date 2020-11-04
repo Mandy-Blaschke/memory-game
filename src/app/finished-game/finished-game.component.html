@@ -1,0 +1,15 @@
+<div *ngIf="service.finishedGame">
+
+  <h2 *ngIf="service.playerOneWon">Spieler 1 hat gewonnen!</h2>
+
+  <div *ngIf="service.playMode === 'pvp'">
+    <h2 *ngIf="service.playerTwoWon">Spieler 2 hat gewonnen!</h2>
+  </div>
+
+  <div *ngIf="service.playMode === 'pvc'">
+    <h2 *ngIf="service.playerTwoWon">Computer hat gewonnen!</h2>
+  </div>
+
+  <app-button [routerLink]="'/settings'">Neues Spiel?</app-button>
+  <app-button [routerLink]="'/home'">Zur Startseite</app-button>
+</div>

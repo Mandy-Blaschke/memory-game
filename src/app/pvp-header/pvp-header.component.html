@@ -1,11 +1,20 @@
-<header>
-  <h3>Spieler 1</h3>
-  <p>{{service.foundPairsPlayerOne}}</p>
-  <h3>Spieler 2</h3>
-  <p>{{service.foundPairsPlayerTwo}}</p>
+<div class="content">
 
-  <div *ngIf="!service.finishedGame">
-    <h3 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h3>
-    <h3 *ngIf="service.secondPlayersTurn">Spieler 2 ist am Zug</h3>
+  <div class="player-one">
+    <h3>Spieler 1:</h3>
+    <h3 class="scores">{{service.foundPairsPlayerOne}}</h3>
   </div>
-</header>
+
+  <div *ngIf="!service.finishedGame" class="turn">
+    <h2 *ngIf="service.firstPlayersTurn">Spieler 1 ist am Zug</h2>
+    <h2 *ngIf="service.secondPlayersTurn">Spieler 2 ist am Zug</h2>
+  </div>
+
+  <div>
+    <div class="player-two">
+      <h3>Spieler 2</h3>
+      <h3>{{service.foundPairsPlayerTwo}}</h3>
+    </div>
+  </div>
+
+</div>

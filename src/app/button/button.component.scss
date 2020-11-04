@@ -5,7 +5,7 @@ button {
   padding: 15px 25px;
   font-family: 'Noto Sans SC', sans-serif;
   background-color: main.$light-blue;
-  color: main.$action;
+  color: main.$yellow;
   text-shadow: 1px 1px 0 main.$dark-blue;
   font-weight: bolder;
   border-radius: 4px;
@@ -18,7 +18,7 @@ button {
   }
 
   &:active {
-    background-color: main.$action;
+    background-color: main.$yellow;
     color: main.$light-blue;
   }
 }
