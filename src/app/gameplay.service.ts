@@ -21,7 +21,7 @@ export class GameplayService {
     {value: 'mixed', title: 'Gemischt'}
   ];
 
-  diff: string;
+  diff = 'middle';
   difficulty = [
     {value: 'easy', title: 'Leicht'},
     {value: 'middle', title: 'Mittel'},
