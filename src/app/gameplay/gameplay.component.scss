@@ -33,7 +33,7 @@
     }
 
     &.visible {
-    transform: rotateY(180deg);
+      transform: rotateY(180deg);
     }
 
 
@@ -65,6 +65,10 @@
       p {
         transform: rotate(45deg);
         color: ghostwhite;
+        -ms-user-select: None;
+        -moz-user-select: None;
+        -webkit-user-select: None;
+        user-select: None;
 
         @media (max-width: 1000px) {
           font-size: 0.8rem;
