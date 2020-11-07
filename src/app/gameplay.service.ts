@@ -149,7 +149,7 @@ export class GameplayService {
     }
 
     if (this.diff === 'hard' && rollDice > 0.1) {
-      if (rollDice <= 0.6) {
+      if (rollDice <= 0.5) {
         doMiddleMove = true;
       } else {
         doHardMove = true;
