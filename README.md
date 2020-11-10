@@ -1,6 +1,5 @@
 # Memory
 
-- *WIP*
 - Erstellung im Rahmen des Selbststudiums
 - klassisches Memory-Spiel
 - Spielbar:
