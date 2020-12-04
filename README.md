@@ -6,6 +6,6 @@
     - alleine (Single Player)
     - gegen anderen Spieler (PvP)
     - gegen Computer (PvC) in drei Schwierigkeitsstufen
-- Spielbar unter: [Memory](https://mb89-memory.web.app/home)
+- Spielbar unter: [Memory](https://mandy-blaschke.de/assets/projects/memory-v1/#/home)
 
 
